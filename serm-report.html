@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERM отчёт — Кристина Егиазарова</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f0f23;
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .page {
+            width: 297mm;
+            height: 210mm;
+            margin: 0 auto;
+        }
+
+        /* Dark Page Base - Landscape */
+        .dark-page {
+            width: 297mm;
+            height: 210mm;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 50px;
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .dark-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header-logo {
+            font-size: 0.75em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .page-header-title {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+
+        .page-number {
+            font-size: 0.8em;
+            opacity: 0.5;
+        }
+
+        /* Cover Page Specifics */
+        .cover-page {
+            justify-content: space-between;
+        }
+
+        .cover-logo {
+            font-size: 0.85em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .cover-main {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cover-label {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            width: fit-content;
+        }
+
+        .cover-title {
+            font-size: 3.2em;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cover-subtitle {
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .cover-client {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 350px;
+        }
+
+        .cover-client-avatar {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .cover-client-info h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .cover-client-info p {
+            opacity: 0.6;
+            font-size: 0.85em;
+        }
+
+        .cover-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-date {
+            opacity: 0.8;
+        }
+
+        .cover-confidential {
+            text-align: right;
+            font-size: 0.75em;
+            opacity: 0.4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Area */
+        .content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* SERM Diagram */
+        .serm-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 60px;
+        }
+
+        .serm-center {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 60px rgba(99, 102, 241, 0.4);
+        }
+
+        .serm-center::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 100%);
+            border-radius: 50%;
+        }
+
+        .serm-center-text {
+            position: relative;
+            z-index: 1;
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .serm-branches {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .serm-branch {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .serm-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.8) 0%, rgba(99, 102, 241, 0.2) 100%);
+            position: relative;
+        }
+
+        .serm-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: #6366f1;
+            border-radius: 50%;
+        }
+
+        .serm-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 18px 25px;
+            min-width: 320px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .serm-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(5px);
+        }
+
+        a.serm-card {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .serm-card-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .serm-card-content h4 {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .serm-card-content p {
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .serm-card-count {
+            margin-left: auto;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #a5b4fc;
+        }
+
+        /* Section Slide */
+        .section-slide {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+        }
+
+        .section-slide-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-slide-right {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title-large {
+            font-size: 2.4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle-large {
+            font-size: 1.1em;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 25px;
+        }
+
+        .section-description {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .stat-big {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-big-value {
+            font-size: 4em;
+            font-weight: 700;
+            color: #a5b4fc;
+            line-height: 1;
+        }
+
+        .stat-big-label {
+            font-size: 1.2em;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            flex: 1;
+            overflow: auto;
+        }
+
+        .glass-card h3 {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.85em;
+        }
+
+        .data-table th {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .data-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .data-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .data-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.85);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table a {
+            color: #a5b4fc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .data-table a:hover {
+            color: #c7d2fe;
+            text-decoration: underline;
+        }
+
+        .truncate-url {
+            display: inline-block;
+            max-width: 280px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+
+        .table-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .table-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .table-link::before {
+            content: '📊';
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+
+        .badge-warning {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+
+        .badge-info {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+        }
+
+        .badge::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* Check List */
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9em;
+        }
+
+        .check-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-list li::before {
+            content: '✓';
+            width: 22px;
+            height: 22px;
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Page Footer */
+        .page-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.75em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                font-size: 10px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                width: 297mm;
+                height: 210mm;
+            }
+
+            .dark-page {
+                width: 297mm;
+                height: 210mm;
+            }
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Slide 1: Cover Page -->
+        <div class="dark-page cover-page">
+            <div class="cover-logo">SERM MONITOR</div>
+
+            <div class="cover-main">
+                <div class="cover-label">Отчёт</div>
+                <h1 class="cover-title">Управление<br>репутацией</h1>
+                <p class="cover-subtitle">Комплексный SERM-отчёт по результатам работы</p>
+
+                <div class="cover-client">
+                    <div class="cover-client-avatar">КЕ</div>
+                    <div class="cover-client-info">
+                        <h3>Кристина Егиазарова</h3>
+                        <p>Персональный бренд</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cover-footer">
+                <div class="cover-date">
+                    <div style="font-size: 2em; font-weight: 700;">Январь</div>
+                    <div style="font-size: 1.2em; opacity: 0.7;">2026</div>
+                </div>
+                <div class="cover-confidential">
+                    Конфиденциально<br>
+                    Для внутреннего использования
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Цели -->
+        <div class="dark-page" id="slide-goals">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Цели проекта</div>
+                <div class="page-number">02</div>
+            </div>
+
+            <div class="content">
+                <div class="goals-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 40px;">
+                    <h2 class="section-title-large" style="text-align: center; margin-bottom: 20px;">Цели SERM-кампании</h2>
+
+                    <div class="goals-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 900px; width: 100%;">
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🎯</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Замещение негатива</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Вытеснение негативных материалов из поисковой выдачи позитивным контентом</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">✨</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Создание позитивной массы</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Наполнение интернета качественным позитивным контентом</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">⚖️</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Разбавление негатива</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Снижение доли негативных упоминаний в общей информационной картине</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🔄</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Изменение позиционирования</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Формирование нового позитивного образа в информационном пространстве</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 3: SERM Diagram -->
+        <div class="dark-page">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Структура работ</div>
+                <div class="page-number">03</div>
+            </div>
+
+            <div class="content">
+                <div class="serm-diagram">
+                    <div class="serm-center">
+                        <span class="serm-center-text">SERM</span>
+                    </div>
+
+                    <div class="serm-branches">
+                        <div class="serm-branch">
+                            <div class="serm-line"></div>
+                            <a href="#slide-bio" class="serm-card">
+                                <div class="serm-card-icon">📝</div>
+                                <div class="serm-card-content">
+                                    <h4>Публикация биографий</h4>
+                                    <p>Размещение на авторитетных площадках</p>
+                                </div>
+                                <div class="serm-card-count">21</div>
+                            </a>
+                        </div>
+
+                        <div class="serm-branch">
+                            <div class="serm-line"></div>
+                            <a href="#slide-info" class="serm-card">
+                                <div class="serm-card-icon">📢</div>
+                                <div class="serm-card-content">
+                                    <h4>Создание и посев инфо-поводов</h4>
+                                    <p>Распространение позитивного контента</p>
+                                </div>
+                                <div class="serm-card-count">28</div>
+                            </a>
+                        </div>
+
+                        <div class="serm-branch">
+                            <div class="serm-line"></div>
+                            <a href="#slide-sites" class="serm-card">
+                                <div class="serm-card-icon">🌐</div>
+                                <div class="serm-card-content">
+                                    <h4>Создание подконтрольных сайтов</h4>
+                                    <p>Сетка веб-ресурсов</p>
+                                </div>
+                                <div class="serm-card-count">30</div>
+                            </a>
+                        </div>
+
+                        <div class="serm-branch">
+                            <div class="serm-line"></div>
+                            <a href="#slide-comments" class="serm-card">
+                                <div class="serm-card-icon">💬</div>
+                                <div class="serm-card-content">
+                                    <h4>Работа с комментариями</h4>
+                                    <p>Форумы и обсуждения</p>
+                                </div>
+                                <div class="serm-card-count">211</div>
+                            </a>
+                        </div>
+
+                        <div class="serm-branch">
+                            <div class="serm-line"></div>
+                            <a href="#slide-seo" class="serm-card">
+                                <div class="serm-card-icon">🔍</div>
+                                <div class="serm-card-content">
+                                    <h4>SEO-оптимизация</h4>
+                                    <p>Продвижение в поисковых системах</p>
+                                </div>
+                                <div class="serm-card-count">✓</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Публикация биографий -->
+        <div class="dark-page" id="slide-bio">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Публикация биографий</div>
+                <div class="page-number">04</div>
+            </div>
+
+            <div class="content">
+                <div class="section-slide">
+                    <div class="section-slide-left">
+                        <h2 class="section-title-large">Публикация<br>биографий</h2>
+                        <p class="section-subtitle-large">Размещение на авторитетных площадках</p>
+
+                        <div class="stat-big" style="margin-bottom: 10px;">
+                            <span class="stat-big-value">21<sup style="font-size: 0.5em;">*</sup></span>
+                            <span class="stat-big-label">публикация</span>
+                        </div>
+
+                        <div class="result-block" style="margin-bottom: 12px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #4ade80; border-radius: 8px;">
+                            <h4 style="color: #4ade80; margin-bottom: 8px; font-size: 0.85em;">Результат:</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.8); font-size: 0.8em; line-height: 1.4;">
+                                <li style="padding: 3px 0;">✓ Насытили интернет нужными материалами с биографиями</li>
+                                <li style="padding: 3px 0;">✓ Заняли множество позиций в топ-10 по запросам, связанным с биографией Кристины</li>
+                            </ul>
+                        </div>
+
+                        <ul class="check-list" style="font-size: 0.85em;">
+                            <li>Уникальный контент для каждой площадки</li>
+                            <li>Оптимизация под поисковые запросы</li>
+                            <li>Индексация в Яндекс и Google</li>
+                        </ul>
+
+                        <a href="https://docs.google.com/spreadsheets/d/1knGYeDbFDO6uBJHNycJJOSVxe0BPVAD15fIcQIpKzX4/edit?gid=1347471346#gid=1347471346" target="_blank" class="table-link">Таблица</a>
+
+                        <p style="margin-top: 15px; font-size: 0.7em; color: rgba(255,255,255,0.4);">* Финальное количество будет больше, когда закончится модерация</p>
+                    </div>
+
+                    <div class="section-slide-right">
+                        <div class="glass-card">
+                            <h3>Список публикаций</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Площадка / URL</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td><a href="https://altapress.ru/afisha/story/kristina-egiazarova-put-psikhologa-376456" target="_blank"><span class="truncate-url">altapress.ru/afisha/story/kristina-egiazarova-put-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>2</td><td><a href="https://s-zametki.ru/kristina-egiazarova-otvechaet-na-chastye-voprosy-o-svoej-praktike.html" target="_blank"><span class="truncate-url">s-zametki.ru/kristina-egiazarova-otvechaet-na-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>3</td><td><a href="https://sigolki.com/texnologii-i-nauka/chudo-texniki/professionalnaya-etika-v-rabote-kristiny-egiazarovoj-graniczy-i-princzipy.html" target="_blank"><span class="truncate-url">sigolki.com/.../professionalnaya-etika-v-rabote-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>4</td><td><a href="https://mlady.org/obrazovanie-i-kvalifikacziya-kristiny-egiazarovoj-fakty-bez-prikras/" target="_blank"><span class="truncate-url">mlady.org/obrazovanie-i-kvalifikacziya-kristiny-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>5</td><td><a href="https://tvcenter.ru/biografii/biografiya-psihologa-kristina-egiazarova/" target="_blank"><span class="truncate-url">tvcenter.ru/biografii/biografiya-psihologa-kristina-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>6</td><td><a href="https://kam24.ru/news/materials/detalnaya-professionalnaya-biografiya-kristina-egiazarova" target="_blank"><span class="truncate-url">kam24.ru/.../detalnaya-professionalnaya-biografiya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>7</td><td><a href="https://www.t24.su/kristina-egiazarova-professionalnyy-put-psihologa/" target="_blank"><span class="truncate-url">t24.su/kristina-egiazarova-professionalnyy-put-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>8</td><td><a href="https://news.1777.ru/119944-ekspertiza-v-psihologii-otnosheniy-kristina-egiazarova" target="_blank"><span class="truncate-url">news.1777.ru/119944-ekspertiza-v-psihologii-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>9</td><td><a href="https://smolensk-i.ru/partners/kristina-egiazarova-praktika-i-metody-raboty_622715" target="_blank"><span class="truncate-url">smolensk-i.ru/.../kristina-egiazarova-praktika-i-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>10</td><td><a href="http://moya-semya.ru/includes/pgs/15/?view_news=kristina-egiazarova-terapiya-podhod" target="_blank"><span class="truncate-url">moya-semya.ru/.../kristina-egiazarova-terapiya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>11</td><td><a href="https://www.kaluga-poisk.ru/news/novosti-kompanii/kristina-egiazarova-narrativnaya-biografiya-psihologa" target="_blank"><span class="truncate-url">kaluga-poisk.ru/.../kristina-egiazarova-narrativnaya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>12</td><td><a href="https://daily-inform.ru/kristina-egiazarova-polnaya-biografiya-speczialista.html" target="_blank"><span class="truncate-url">daily-inform.ru/kristina-egiazarova-polnaya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>13</td><td><a href="https://astrakhan.net/baza-kompanij/meditsina-zdorove-krasota/kristina-egiazarova-psiholog" target="_blank"><span class="truncate-url">astrakhan.net/.../kristina-egiazarova-psiholog</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>14</td><td><a href="https://uwoomen.com/advice/psychology/119348-kristina-egiazarova-psiholog-po-rabote-s-parami-i-semejnaya-terapiya.html" target="_blank"><span class="truncate-url">uwoomen.com/.../kristina-egiazarova-psiholog-po-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>15</td><td><a href="https://chehov-vid.ru/news/society/45174/kristina-egiazarova-psikholog-po-rabote-s-samootsenkoy-i-lichnostnym-rostom/?sphrase_id=1100088" target="_blank"><span class="truncate-url">chehov-vid.ru/.../kristina-egiazarova-psikholog-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>16</td><td><a href="https://v-tagile.ru/obschestvo-dekabr-5/kristina-egiazarova-psikholog-po-rabote-s-professionalnym-vygoraniem" target="_blank"><span class="truncate-url">v-tagile.ru/.../kristina-egiazarova-psikholog-po-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>17</td><td><a href="https://e-news.su/society/529895-kristina-egiazarova-kak-prohodit-psihoterapija.html" target="_blank"><span class="truncate-url">e-news.su/.../kristina-egiazarova-kak-prohodit-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>18</td><td><a href="https://www.kaluga-poisk.ru/news/novosti-kompanii/kristina-egiazarova-professionalnaya-etika-psihologa" target="_blank"><span class="truncate-url">kaluga-poisk.ru/.../kristina-egiazarova-professionalnaya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>19</td><td><a href="https://www.kaluga-poisk.ru/news/novosti-kompanii/prosvetitelskaya-deyatelnost-i-publikatsii-kristiny-egiazarovoy" target="_blank"><span class="truncate-url">kaluga-poisk.ru/.../prosvetitelskaya-deyatelnost-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>20</td><td><a href="https://1777.ru/stavropol/kristina-egiazarova-rezultaty-priznanie" target="_blank"><span class="truncate-url">1777.ru/stavropol/kristina-egiazarova-rezultaty-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                    <tr><td>21</td><td><a href="https://medrybnoe.ru/kristina-egiazarova-sovremennaya-praktika-i-professionalnoe-razvitie.html" target="_blank"><span class="truncate-url">medrybnoe.ru/kristina-egiazarova-sovremennaya-...</span></a></td><td><span class="badge badge-success">Опубликовано</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Создание и посев инфо-поводов -->
+        <div class="dark-page" id="slide-info">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Инфо-поводы</div>
+                <div class="page-number">05</div>
+            </div>
+
+            <div class="content">
+                <div class="section-slide">
+                    <div class="section-slide-left">
+                        <h2 class="section-title-large">Создание и посев<br>инфо-поводов</h2>
+                        <p class="section-subtitle-large">Распространение позитивного контента</p>
+
+                        <div class="stat-big" style="margin-bottom: 10px;">
+                            <span class="stat-big-value">28<sup style="font-size: 0.5em;">*</sup></span>
+                            <span class="stat-big-label">инфо-поводов</span>
+                        </div>
+
+                        <div class="result-block" style="margin-bottom: 12px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #4ade80; border-radius: 8px;">
+                            <h4 style="color: #4ade80; margin-bottom: 8px; font-size: 0.85em;">Результат:</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.8); font-size: 0.8em; line-height: 1.4;">
+                                <li style="padding: 3px 0;">✓ Разбавили негатив нужными нам материалами</li>
+                                <li style="padding: 3px 0;">✓ Добавили позитивных охватов Кристине</li>
+                            </ul>
+                        </div>
+
+                        <ul class="check-list" style="font-size: 0.85em;">
+                            <li>Новостные статьи и пресс-релизы</li>
+                            <li>Экспертные комментарии</li>
+                            <li>Интервью и обзоры</li>
+                            <li>Тематические публикации</li>
+                        </ul>
+
+                        <a href="https://docs.google.com/spreadsheets/d/1knGYeDbFDO6uBJHNycJJOSVxe0BPVAD15fIcQIpKzX4/edit?gid=1347471346#gid=1347471346" target="_blank" class="table-link">Таблица</a>
+
+                        <p style="margin-top: 15px; font-size: 0.7em; color: rgba(255,255,255,0.4);">* Финальное количество будет больше, когда закончится модерация</p>
+                    </div>
+
+                    <div class="section-slide-right">
+                        <div class="glass-card">
+                            <h3>Список инфо-поводов</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Площадка / URL</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td><a href="https://kam24.ru/news/materials/7-mifov-o-kod-fakty-o-kolce-kristiny-egiazarovoy" target="_blank"><span class="truncate-url">kam24.ru/.../7-mifov-o-kod-fakty-o-kolce-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>2</td><td><a href="https://ulpressa.ru/2022/08/26/60-let-nauki-v-5-grammah-hrv-tehnologiya-kod-iz-kosmosa/" target="_blank"><span class="truncate-url">ulpressa.ru/.../60-let-nauki-v-5-grammah-hrv-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>3</td><td><a href="https://zavtra.ru/blogs/kol_tco_ne_rabotaet" target="_blank"><span class="truncate-url">zavtra.ru/blogs/kol_tco_ne_rabotaet</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>4</td><td><a href="https://gorod-kimry.ru/zinfo691/12/" target="_blank"><span class="truncate-url">gorod-kimry.ru/zinfo691/12/</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>5</td><td><a href="https://volga.news/article/774138.html" target="_blank"><span class="truncate-url">volga.news/article/774138.html</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>6</td><td><a href="https://felomena.com/stati/psixologiya/metodiki-raboty-kristiny-egiazarovoj-nauchnyj-podxod-k-psixologii-otnoshenij/" target="_blank"><span class="truncate-url">felomena.com/.../metodiki-raboty-kristiny-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>7</td><td><a href="https://ladyadvice.ru/dom/uyut-v-dome/chto-na-samom-dele-proishodit-na-konsultaczii-u-kristiny-egiazarovoj/" target="_blank"><span class="truncate-url">ladyadvice.ru/.../chto-na-samom-dele-proishodit-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>8</td><td><a href="https://kalendarnagod.ru/realnye-istorii-klientov-kristiny-egiazarovoj-kogda-psihologiya-pomogaet/" target="_blank"><span class="truncate-url">kalendarnagod.ru/realnye-istorii-klientov-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>9</td><td><a href="http://moya-semya.ru/includes/pgs/14/?view_news=kristina-egiazarova-pochemu-hvaljat-i-kritikujut" target="_blank"><span class="truncate-url">moya-semya.ru/.../kristina-egiazarova-pochemu-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>10</td><td><a href="https://progorod43.ru/podhodit-li-vam-rabota-s-egiazarovoy" target="_blank"><span class="truncate-url">progorod43.ru/podhodit-li-vam-rabota-s-egiazarovoy</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>11</td><td><a href="https://progorod43.ru/egiazarova-sotseti-i-realnaya-rabota" target="_blank"><span class="truncate-url">progorod43.ru/egiazarova-sotseti-i-realnaya-rabota</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>12</td><td><a href="https://cont.ws/@hexagon/3167565" target="_blank"><span class="truncate-url">cont.ws/@hexagon/3167565</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>13</td><td><a href="https://astrakhan.su/news/health/monitoring-sna-s-pomoshhyu-kod-chto-pokazyvayut-dannye-i-kak-ih-ispolzovat/" target="_blank"><span class="truncate-url">astrakhan.su/.../monitoring-sna-s-pomoshhyu-kod-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>14</td><td><a href="https://1777.ru/stavropol/stress-i-vosstanovlenie-kod" target="_blank"><span class="truncate-url">1777.ru/stavropol/stress-i-vosstanovlenie-kod</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>15</td><td><a href="https://itcrumbs.ru/fitness-treking-kod-vs-braslet_104578" target="_blank"><span class="truncate-url">itcrumbs.ru/fitness-treking-kod-vs-braslet_104578</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>16</td><td><a href="https://bigpicture.ru/rabota-s-travmoy-v-otnosheniyah-egiazarova/" target="_blank"><span class="truncate-url">bigpicture.ru/rabota-s-travmoy-v-otnosheniyah-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>17</td><td><a href="https://tvcenter.ru/dom-i-semya/granitsy-v-otnosheniyah-podhod-kristiny-egiazarovoy/" target="_blank"><span class="truncate-url">tvcenter.ru/.../granitsy-v-otnosheniyah-podhod-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>18</td><td><a href="https://astv.ru/news/materials/kak-kristina-egiazarova-rabotaet-s-parami-v-krizise" target="_blank"><span class="truncate-url">astv.ru/.../kak-kristina-egiazarova-rabotaet-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>19</td><td><a href="https://berkat.ru/articles/260-samoocenka-i-otnoshenija-podhod-kristiny-egiazarovoi.html" target="_blank"><span class="truncate-url">berkat.ru/.../samoocenka-i-otnoshenija-podhod-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>20</td><td><a href="https://www.kaluga-poisk.ru/news/novosti-kompanii/onlayn-terapiya-osobennosti-formata-prakticheskie-nablyudeniya-i-opyt-raboty-kristiny-egiazarovoy" target="_blank"><span class="truncate-url">kaluga-poisk.ru/.../onlayn-terapiya-osobennosti-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>21</td><td><a href="https://prochepetsk.ru/psihologiya-deneg-ustanovki-egiazarova" target="_blank"><span class="truncate-url">prochepetsk.ru/psihologiya-deneg-ustanovki-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>22</td><td><a href="https://www.bragazeta.ru/news/2025/06/09/kak-vybrat-biznes-partnjora-psihologicheskie-kriterii-ot-kristiny-egiazarovoj/" target="_blank"><span class="truncate-url">bragazeta.ru/.../kak-vybrat-biznes-partnjora-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>23</td><td><a href="https://unews.pro/news/147483/" target="_blank"><span class="truncate-url">unews.pro/news/147483/</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>24</td><td><a href="https://www.politnavigator.net/vygoranie-predprinimatelya-egiazarova.html" target="_blank"><span class="truncate-url">politnavigator.net/vygoranie-predprinimatelya-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>25</td><td><a href="https://stolica-s.su/partners/psihologiya-peregovorov-kak-ne-poddatsya-manipulyacziyam" target="_blank"><span class="truncate-url">stolica-s.su/.../psihologiya-peregovorov-kak-ne-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>26</td><td><a href="https://infoniac.ru/panicheskie-ataki-kak-spravitsya-i-vernut-kontrol/" target="_blank"><span class="truncate-url">infoniac.ru/panicheskie-ataki-kak-spravitsya-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>27</td><td><a href="https://www.t24.su/prokrastinatsiya-i-samosabotazh-pochemu-otkladyvaem-vazhnoe/" target="_blank"><span class="truncate-url">t24.su/prokrastinatsiya-i-samosabotazh-pochemu-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                    <tr><td>28</td><td><a href="https://actualnews.org/obshestvo/599333-otnoshenija-s-roditeljami-vo-vzroslom-vozraste-kak-vystroit-granicy.html" target="_blank"><span class="truncate-url">actualnews.org/.../otnoshenija-s-roditeljami-vo-...</span></a></td><td><span class="badge badge-success">Размещено</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Создание подконтрольных сайтов -->
+        <div class="dark-page" id="slide-sites">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Подконтрольные сайты</div>
+                <div class="page-number">06</div>
+            </div>
+
+            <div class="content">
+                <div class="section-slide">
+                    <div class="section-slide-left">
+                        <h2 class="section-title-large">Создание<br>подконтрольных сайтов</h2>
+                        <p class="section-subtitle-large">Сетка веб-ресурсов</p>
+
+                        <div class="stat-big" style="margin-bottom: 10px;">
+                            <span class="stat-big-value">30</span>
+                            <span class="stat-big-label">сайтов</span>
+                        </div>
+
+                        <div class="result-block" style="margin-bottom: 12px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #4ade80; border-radius: 8px;">
+                            <h4 style="color: #4ade80; margin-bottom: 8px; font-size: 0.85em;">Результат:</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.8); font-size: 0.8em; line-height: 1.4;">
+                                <li style="padding: 3px 0;">✓ Имеем собственную сетку сайтов</li>
+                                <li style="padding: 3px 0;">✓ Разместили 60 публикаций про Кристину</li>
+                                <li style="padding: 3px 0;">✓ Получили 140к+ охватов на своих площадках</li>
+                            </ul>
+                        </div>
+
+                        <ul class="check-list" style="font-size: 0.85em;">
+                            <li>Уникальный дизайн и контент</li>
+                            <li>SEO-оптимизация</li>
+                            <li>Регулярное обновление</li>
+                            <li>Перелинковка между ресурсами</li>
+                        </ul>
+
+                        <a href="https://docs.google.com/spreadsheets/d/1q3cfQfg21cTFxCUMJEfZozC8ksiwjdNUYQVOMH_Kka8/edit?gid=0#gid=0" target="_blank" class="table-link">Таблица</a>
+                    </div>
+
+                    <div class="section-slide-right">
+                        <div class="glass-card">
+                            <h3>Список сайтов</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Домен</th>
+                                        <th>Посетители</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td><a href="https://jobtodaynews.ru" target="_blank">jobtodaynews.ru</a></td><td>6 697</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>2</td><td><a href="https://infotechmedia.ru" target="_blank">infotechmedia.ru</a></td><td>7 418</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>3</td><td><a href="https://fashionlooknews.ru" target="_blank">fashionlooknews.ru</a></td><td>7 119</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>4</td><td><a href="https://fitarenanews.ru" target="_blank">fitarenanews.ru</a></td><td>7 159</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>5</td><td><a href="https://financpotok.ru" target="_blank">financpotok.ru</a></td><td>7 748</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>6</td><td><a href="https://artcontextnews.ru" target="_blank">artcontextnews.ru</a></td><td>4 234</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>7</td><td><a href="https://styleformulanews.ru" target="_blank">styleformulanews.ru</a></td><td>7 010</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>8</td><td><a href="https://educationfastnews.ru" target="_blank">educationfastnews.ru</a></td><td>6 867</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>9</td><td><a href="https://dushevnonews.ru" target="_blank">dushevnonews.ru</a></td><td>7 309</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>10</td><td><a href="https://medpotoknews.ru" target="_blank">medpotoknews.ru</a></td><td>6 960</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>11</td><td><a href="https://sciencescope.ru" target="_blank">sciencescope.ru</a></td><td>7 307</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>12</td><td><a href="https://zhivizdorovonews.ru" target="_blank">zhivizdorovonews.ru</a></td><td>6 448</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>13</td><td><a href="https://travelmedianews.ru" target="_blank">travelmedianews.ru</a></td><td>4 335</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>14</td><td><a href="https://fastmedianews.ru" target="_blank">fastmedianews.ru</a></td><td>4 225</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>15</td><td><a href="https://urbandiva.ru" target="_blank">urbandiva.ru</a></td><td>6 633</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>16</td><td><a href="https://zhenskijmirnews.ru" target="_blank">zhenskijmirnews.ru</a></td><td>7 692</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>17</td><td><a href="https://openmedianews.ru" target="_blank">openmedianews.ru</a></td><td>2 344</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>18</td><td><a href="https://artpointmedia.ru" target="_blank">artpointmedia.ru</a></td><td>2 344</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>19</td><td><a href="https://mediaculturanews.ru" target="_blank">mediaculturanews.ru</a></td><td>2 451</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>20</td><td><a href="https://foodmedianews.ru" target="_blank">foodmedianews.ru</a></td><td>4 335</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>21</td><td><a href="https://zojfoodnews.ru" target="_blank">zojfoodnews.ru</a></td><td>3 747</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>22</td><td><a href="https://urbanculturemedia.ru" target="_blank">urbanculturemedia.ru</a></td><td>2 123</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>23</td><td><a href="https://healthnovanews.ru" target="_blank">healthnovanews.ru</a></td><td>6 906</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>24</td><td><a href="https://vivawomannews.ru" target="_blank">vivawomannews.ru</a></td><td>7 071</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>25</td><td><a href="https://techpulsenews.ru" target="_blank">techpulsenews.ru</a></td><td>7 817</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>26</td><td><a href="https://businesspulsenews.ru" target="_blank">businesspulsenews.ru</a></td><td>7 456</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>27</td><td><a href="https://delovoimimews.ru" target="_blank">delovoimimews.ru</a></td><td>7 308</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>28</td><td><a href="https://gooddietnews.ru" target="_blank">gooddietnews.ru</a></td><td>3 774</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>29</td><td><a href="https://newsopenmedia.ru" target="_blank">newsopenmedia.ru</a></td><td>2 131</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                    <tr><td>30</td><td><a href="https://mediahomenews.ru" target="_blank">mediahomenews.ru</a></td><td>2 863</td><td><span class="badge badge-success">Активен</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: Работа с комментариями -->
+        <div class="dark-page" id="slide-comments">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Комментарии</div>
+                <div class="page-number">07</div>
+            </div>
+
+            <div class="content">
+                <div class="section-slide">
+                    <div class="section-slide-left">
+                        <h2 class="section-title-large">Работа с<br>комментариями</h2>
+                        <p class="section-subtitle-large">Форумы и обсуждения</p>
+
+                        <div class="stat-big" style="margin-bottom: 10px;">
+                            <span class="stat-big-value">211<sup style="font-size: 0.5em;">*</sup></span>
+                            <span class="stat-big-label">комментариев</span>
+                        </div>
+
+                        <div class="result-block" style="margin-bottom: 12px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #4ade80; border-radius: 8px;">
+                            <h4 style="color: #4ade80; margin-bottom: 8px; font-size: 0.85em;">Результат:</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.8); font-size: 0.8em; line-height: 1.4;">
+                                <li style="padding: 3px 0;">✓ Закрыли необработанный негатив</li>
+                                <li style="padding: 3px 0;">✓ Разбавили радикально негативные топики</li>
+                                <li style="padding: 3px 0;">✓ Создали позитивные ветки на форумах</li>
+                                <li style="padding: 3px 0;">✓ Повысили рейтинг книги с 4,2 до 4,5</li>
+                            </ul>
+                        </div>
+
+                        <ul class="check-list" style="font-size: 0.85em;">
+                            <li>Форумы и Q&A площадки</li>
+                            <li>Социальные сети</li>
+                            <li>Отзовики и рейтинговые сайты</li>
+                            <li>Комментарии под статьями</li>
+                        </ul>
+
+                        <a href="https://docs.google.com/spreadsheets/d/1cANI89DlAZDQFhqg4TN9NwRTbJT1e7LXk5m17698N_U/edit?gid=955210796#gid=955210796" target="_blank" class="table-link">Таблица</a>
+
+                        <p style="margin-top: 15px; font-size: 0.7em; color: rgba(255,255,255,0.4);">* Финальное количество будет больше, когда закончится модерация</p>
+                    </div>
+
+                    <div class="section-slide-right">
+                        <div class="glass-card">
+                            <h3>Распределение по площадкам</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Тип площадки</th>
+                                        <th>Количество</th>
+                                        <th>Тональность</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Форумы</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                    <tr><td>Q&A площадки</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                    <tr><td>Социальные сети</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                    <tr><td>Отзовики</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                    <tr><td>Новостные порталы</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                    <tr><td>Блоги</td><td>—</td><td><span class="badge badge-success">Позитив</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: SEO-оптимизация -->
+        <div class="dark-page" id="slide-seo">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">SEO-оптимизация</div>
+                <div class="page-number">08</div>
+            </div>
+
+            <div class="content">
+                <div class="section-slide">
+                    <div class="section-slide-left">
+                        <h2 class="section-title-large">SEO-<br>оптимизация</h2>
+                        <p class="section-subtitle-large">Продвижение в поисковых системах</p>
+
+                        <div class="result-block" style="margin: 12px 0; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #4ade80; border-radius: 8px;">
+                            <h4 style="color: #4ade80; margin-bottom: 8px; font-size: 0.85em;">Результат:</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.8); font-size: 0.8em; line-height: 1.4;">
+                                <li style="padding: 3px 0;">✓ Оптимизация всех выпущенных материалов</li>
+                                <li style="padding: 3px 0;">✓ Продвижение в ТОП множество запросов</li>
+                                <li style="padding: 3px 0;">✓ Смещение негатива вниз ТОПа</li>
+                            </ul>
+                        </div>
+
+                        <ul class="check-list" style="font-size: 0.85em;">
+                            <li><strong>Внутренняя оптимизация</strong> — мета-теги, заголовки, структура</li>
+                            <li><strong>Контентная оптимизация</strong> — ключевые слова, LSI</li>
+                            <li><strong>Накрутка поведенческих факторов</strong> — улучшение метрик</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-slide-right">
+                        <div class="glass-card">
+                            <h3>Позиции по ключевым словам (12.01.2026)</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Ключевое слово</th>
+                                        <th>Позиция</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>Кристина Егиазарова</td><td><span class="badge badge-success">1 +5</span></td></tr>
+                                    <tr><td>2</td><td>Кристина Егиазарова негатив</td><td><span class="badge badge-success">1 +1</span></td></tr>
+                                    <tr><td>3</td><td>Кристина Егиазарова жалоба</td><td><span class="badge badge-success">1 +1</span></td></tr>
+                                    <tr><td>4</td><td>Кристина Егиазарова мнения</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>5</td><td>Кристина Егиазарова репутация</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>6</td><td>Кристина Егиазарова мнение людей</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>7</td><td>Кристина Егиазарова история</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>8</td><td>Кристина Егиазарова биография отзывы</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>9</td><td>Кристина Егиазарова правда</td><td><span class="badge badge-success">1</span></td></tr>
+                                    <tr><td>10</td><td>Кристина Егиазарова критика</td><td><span class="badge badge-info">1</span></td></tr>
+                                    <tr><td>11</td><td>Кристина Егиазарова впечатления</td><td><span class="badge badge-success">2</span></td></tr>
+                                    <tr><td>12</td><td>Кристина Егиазарова скандал</td><td><span class="badge badge-success">2</span></td></tr>
+                                    <tr><td>13</td><td>Кристина Егиазарова скандальные истории</td><td><span class="badge badge-success">2</span></td></tr>
+                                    <tr><td>14</td><td>Кристина Егиазарова разоблачение личности</td><td><span class="badge badge-success">3 +5</span></td></tr>
+                                    <tr><td>15</td><td>Кристина Егиазарова комментарии</td><td><span class="badge badge-success">3 +1</span></td></tr>
+                                    <tr><td>16</td><td>Кристина Егиазарова обман</td><td><span class="badge badge-success">5</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 9: Итоги -->
+        <div class="dark-page" id="slide-summary">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Итоги</div>
+                <div class="page-number">09</div>
+            </div>
+
+            <div class="content">
+                <div class="goals-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 40px;">
+                    <h2 class="section-title-large" style="text-align: center; margin-bottom: 20px;">Итоги SERM-кампании</h2>
+
+                    <div class="goals-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 900px; width: 100%;">
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px; color: #4ade80;">109</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Публикаций суммарно</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Биографии, инфо-поводы и материалы на подконтрольных сайтах</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px; color: #4ade80;">211</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Комментариев</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Размещено на форумах, отзовиках и в социальных сетях</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px; color: #4ade80;">30</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Собственных сайтов</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Автонаполняемые веб-ресурсы в нашей сетке</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 15px; color: #4ade80;">1-10</div>
+                            <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.2em;">Позиции в ТОП</h3>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Наши площадки занимают ведущие позиции в выдаче</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: Рекомендации -->
+        <div class="dark-page" id="slide-recommendations">
+            <div class="page-header">
+                <div class="page-header-logo">SERM MONITOR</div>
+                <div class="page-header-title">Рекомендации</div>
+                <div class="page-number">10</div>
+            </div>
+
+            <div class="content">
+                <div class="goals-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 40px;">
+                    <h2 class="section-title-large" style="text-align: center; margin-bottom: 20px;">Рекомендации</h2>
+
+                    <div class="recommendations-list" style="max-width: 800px; width: 100%;">
+                        <div class="glass-card" style="padding: 20px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 2em; color: #6366f1;">🌐</div>
+                            <div>
+                                <h3 style="color: #fff; margin-bottom: 5px; font-size: 1.1em;">Продолжать использовать сетку сайтов</h3>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Размещение нужных публикаций на подконтрольных ресурсах</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="padding: 20px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 2em; color: #6366f1;">🔍</div>
+                            <div>
+                                <h3 style="color: #fff; margin-bottom: 5px; font-size: 1.1em;">Продолжить SEO-продвижение</h3>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Оптимизация размещённых материалов для монополизации ТОПов выдачи</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="padding: 20px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 2em; color: #6366f1;">👁️</div>
+                            <div>
+                                <h3 style="color: #fff; margin-bottom: 5px; font-size: 1.1em;">Контролировать площадки</h3>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Мониторинг на предмет негатива и своевременное реагирование</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="padding: 20px 30px; display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 2em; color: #6366f1;">💬</div>
+                            <div>
+                                <h3 style="color: #fff; margin-bottom: 5px; font-size: 1.1em;">Продолжать работу с комментариями</h3>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9em;">Размещение позитивных комментариев на форумах и площадках</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>SERM отчёт — Кристина Егиазарова</span>
+                <span>Январь 2026</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
